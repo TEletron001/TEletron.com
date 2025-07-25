@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keith T. Mugwaziwendota Portfolio</title>
+    <link rel="icon" type="image/png" href="TEletron.png" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Center the last service item if it wraps to a new row (e.g., 5th item in a 4-col grid) */
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .services-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+            .services-grid > .service-item:last-child {
+                grid-column: 2 / span 2;
+                justify-self: center;
+            }
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Lighter, more inviting background */
+            color: #4a5568; /* Slightly darker gray for main body text */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #1d4ed8, #1e3a8a); /* Deeper blue gradient for header */
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            margin-top: -100px; /* Pull image up into header */
+            position: relative;
+            z-index: 10;
+        }
+        .section-heading {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            color: #1a202c; /* Dark text for headings */
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+            transition: color 0.3s ease; /* Smooth color transition for headings */
+        }
+        .section-heading:hover {
+            color: #2563eb; /* Stronger blue on hover for headings */
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: #2563eb; /* Stronger blue underline */
+            border-radius: 2px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Slightly stronger shadow */
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px); /* More pronounced lift on hover */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        .btn-primary {
+            background-color: #2563eb; /* Stronger blue */
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+        }
+        .btn-primary:hover {
+            background-color: #1e40af; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+        .project-item, .service-item {
+            background-color: #f0f4f8; /* Lighter background for items */
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content within item */
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .project-item:hover, .service-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .project-item h3, .service-item h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748; /* Darker gray for item headings */
+            margin-bottom: 0.75rem;
+        }
+        .project-item p.text-gray-600,
+        .service-item p.text-gray-600 {
+            font-size: 1rem;
+            color: #000 !important; /* Black */
+            font-family: 'sans-serif', 'Inter', Arial;
+        }
+        .project-item p.text-xs,
+        .service-item p.text-xs {
+            font-size: 0.92rem;
+            color: #000 !important; /* Black */
+            font-family: 'sans-serif', 'Inter', Arial;
+        }
+        .item-image {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            aspect-ratio: 5/3;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .contact-info p {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            color: #4a5568; /* Default text color for contact info */
+        }
+        .contact-info svg {
+            margin-right: 0.75rem;
+            color: #2563eb; /* Stronger blue for icons */
+        }
+        .contact-info a {
+            color: #2563eb; /* Blue for contact links */
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: #1e40af; /* Darker blue on hover */
+            text-decoration: underline;
+        }
+        /* Styles for the responsive navigation */
+        .navbar {
+            background-color: #1a202c; /* Dark background for navbar */
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #2563eb; /* Stronger blue on hover */
+        }
+        .hamburger {
+            display: none; /* Hidden on larger screens */
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            background-color: #2d3748; /* Slightly lighter dark for mobile menu */
+            padding: 1rem;
+            position: absolute;
+            top: 100%; /* Position below navbar */
+            left: 0;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .mobile-menu a:hover {
+            background-color: #4a5568;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 1280px) {
+            .grid-cols-4 {
+                grid-template-columns: repeat(5, 1fr) !important;
+            }
+        }
+        @media (max-width: 1280px) {
+            .container {
+                padding: 1.5rem 0.5rem;
+            }
+            .grid-cols-4 {
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+        }
+        @media (max-width: 1024px) {
+            .container {
+                padding: 1.5rem 0.5rem;
+            }
+            .grid-cols-4 {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        @media (max-width: 900px) {
+            .container {
+                padding: 1rem 0.25rem;
+            }
+            .grid-cols-4 {
+                grid-template-columns: 1fr !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .mobile-menu.active {
+                display: flex;
+            }
+            .header-bg {
+                padding: 2rem 0;
+            }
+            .profile-img {
+                margin-top: -60px;
+                width: 100px;
+                height: 100px;
+            }
+            .section-heading {
+                font-size: 1.25rem;
+            }
+            .card {
+                padding: 1rem;
+            }
+            .project-item h3, .service-item h3 {
+                font-size: 1rem;
+            }
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+            .item-image {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.5rem 0.1rem;
+            }
+            .header-bg {
+                padding: 1rem 0;
+            }
+            .profile-img {
+                margin-top: -40px;
+                width: 70px;
+                height: 70px;
+            }
+            .section-heading {
+                font-size: 1rem;
+            }
+            .card {
+                padding: 0.5rem;
+            }
+            .item-image {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#home" class="flex items-center text-2xl font-bold text-white">
+                <img src="TEletron.png" alt="Logo" class="h-8 w-8 rounded-full mr-3" />
+                Keith T. Mugwaziwendota
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <!-- Mobile Menu (hidden by default) -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header id="home" class="header-bg">
+        <div class="container">
+            <h1 class="text-5xl font-extrabold mb-4">Keith T. Mugwaziwendota</h1>
+            <p class="text-xl font-light">Technovestor</p>
+            <p class="text-lg mt-2">Connecting the World, One Innovation at a Time.</p>
+        </div>
+    </header>
+
+    <main class="container -mt-20 relative z-20">
+        <div class="flex flex-col items-center mb-12">
+            <!-- User's image from the prompt -->
+            <img src="TEletron.png" alt="Your Profile Picture" class="profile-img">
+            <a href="KEITH T MUGWAZIWENDOTA - CURRICULUM VITAE.pdf" download class="btn-primary mt-6">Download CV</a>
+        </div>
+
+        <!-- About Me Section -->
+        <section id="about" class="card">
+            <h2 class="section-heading">About Me</h2>
+            <p class="text-lg text-gray-700 mb-4">
+                 I am a Telecommunications Engineer specialising in network design and infrastructure. I have hands-on experience in designing and implementing network solutions, monitoring performance, managing security protocols, and configuring devices such as Sophos and Cisco routers, switches, and firewalls.
+
+            </p>
+            <p class="text-lg text-gray-600 mb-4">
+                I offer a broad range of ICT services, including CCTV installation, website development, home and SME network consultation, and tech project prototyping. I am proficient in Python, C++, HTML, and CSS, and I work comfortably with tools such as Visual Studio Code, Proteus, Cisco Packet Tracer, Advanced Design System (ADS), and Arduino IDE.
+            </p>
+            
+            <p class="text-lg text-gray-700">
+                My work is driven by a passion for creating practical, impactful solutions. I strive to leverage technology to improve connectivity and accessibility, while continually growing and contributing meaningful innovations.
+            </p>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="card">
+            <h2 class="section-heading">My Services</h2>
+            <div class="services-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="service-item">
+                    <img src="CCTV.jpeg" alt="CCTV Installation" class="item-image">
+                    <h3>CCTV Installation</h3>
+                    <p class="text-gray-600 text-sm">
+                        Professional installation and setup of CCTV surveillance systems for homes and businesses, ensuring optimal security and monitoring.
+                    </p>
+                </div>
+                <div class="service-item">
+                    <img src="Web Designing.jpg" alt="Website Designing" class="item-image">
+                    <h3>Website Designing</h3>
+                    <p class="text-gray-600 text-sm">
+                        Crafting modern, responsive, and user-friendly websites tailored to your personal or business needs.
+                    </p>
+                </div>
+                <div class="service-item">
+                    <img src="Home Network.jpg" alt="Home & SMEs Network Consultant" class="item-image">
+                    <h3>Home & SMEs Network Consultant</h3>
+                    <p class="text-gray-600 text-sm">
+                        Expert consultation, design, and troubleshooting of home and small business (SMEs) networks, including Wi-Fi optimization, security, and scalable solutions for reliable connectivity.
+                    </p>
+                </div>
+                <div class="service-item">
+                    <img src="Projects.png" alt="Tech Projects Prototyping" class="item-image">
+                    <h3>Tech Projects Prototyping</h3>
+                    <p class="text-gray-600 text-sm">
+                        Assisting with the development and prototyping of innovative technology projects from concept to a working model.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="card">
+            <h2 class="section-heading">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Project 1 -->
+                <div class="project-item">
+                    <img src="Voting System.jpg" alt="Electronic Voting System Project" class="item-image">
+                    <h3>Fingerprint Electronic Voting System</h3>
+                    <p class="text-gray-600 text-sm mb-2">
+                        Developed a secure and user-friendly electronic voting system using Arduino Uno, designed to ensure transparency and accuracy in the voting process for small-scale elections.
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        Technologies: Arduino Uno, C/C++, LCD Display. Fingerprint Sensor
+                    </p>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-item">
+                    <img src="Smart Assistant.png" alt="AI Wearable Assistive System Project" class="item-image">
+                    <h3>AI Wearable Assistive System</h3>
+                    <p class="text-gray-600 text-sm mb-2">
+                        Designed an artificial intelligence-powered wearable assistive system to enhance navigation and accessibility for individuals with visual impairment, utilizing real-time object detection and voice feedback.
+                    </p>
+                    <p class="text-xs text-gray-500">
+                         Technologies: Raspberry Pi 4, Python, OpenCV, TensorFlow, Audio Output
+                    </p>
+                </div>
+                <!-- Project 3 -->
+                <div class="project-item">
+                    <img src="Rectenna.png" alt="Rectangular Insert-Feed Rectenna Project" class="item-image">
+                    <h3>Rectangular Insert-Feed Rectenna</h3>
+                    <p class="text-gray-600 text-sm mb-2">
+                        Designed and fabricated a rectangular insert-feed rectenna system for efficient radio frequency energy harvesting at 5 GHz, enabling wireless power transfer for low-power devices.
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        Technologies: Advanced Design System, PCB Fabrication, VNA Lite
+                    </p>
+                </div>
+                <!-- Project 4 -->
+                <div class="project-item">
+                    <img src="Home Automation.jpg" alt="IoT Smart Home Automation Project" class="item-image">
+                    <h3>IoT-based Smart Home Automation System</h3>
+                    <p class="text-gray-600 text-sm mb-2">
+                        Developed an IoT system for smart home automation, enabling remote control of home appliances via a website.
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        Technologies: ESP32, and MQTT, HTML/CSS, JavaScript
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Details Section -->
+        <section id="contact" class="card flex flex-col items-center justify-center">
+            <h2 class="section-heading">Contact Me</h2>
+            <div class="contact-info text-lg grid grid-cols-1 md:grid-cols-2 gap-4 justify-center">
+                <p>
+                    <img src="Email.png" alt="Email Icon" class="h-6 w-6 mr-3 inline-block" />
+                    <a href="mailto:ktmgwazy@gmail.com" class="text-blue-600 hover:underline">ktmgwazy@gmail.com</a>
+                </p>
+                <p>
+                    <img src="Calling.jpeg" alt="Phone Icon" class="h-6 w-6 mr-3 inline-block" />
+                    <a href="tel:+263788025819" class="text-blue-600 hover:underline"> +263 788 025 819</a>
+                </p>
+                <p>
+                    <img src="WhatsApp.jpeg" alt="WhatsApp Icon" class="h-6 w-6 mr-3 inline-block" />
+                    <a href="https://wa.me/+263788025819" target="_blank" class="text-blue-600 hover:underline">Contact Me On WhatsApp</a>
+                </p>
+                <p>
+                    <img src="Telegram.png" alt="Telegram Icon" class="h-6 w-6 mr-3 inline-block" />
+                    <a href="https://t.me/TEletron001" target="_blank" class="text-blue-600 hover:underline">Contact Me On Telegram</a>
+                </p>
+                <p>
+                    <img src="Location.jpeg" alt="Location Icon" class="h-6 w-6 mr-3 inline-block" />
+                    Masvingo, Zimbabwe
+                </p>
+                <p>
+                    <img src="LinkedIn.png" alt="LinkedIn Icon" class="h-6 w-6 mr-3 inline-block" />
+                    <a href="https://linkedin.com/in/keithteletron" target="_blank" class="text-blue-600 hover:underline">LinkedIn Profile</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-6 mt-8 rounded-t-2xl">
+        <p>&copy; 2025 Keith TEletron. All rights reserved.</p>
+        <p class="text-sm mt-2">Inspired By Technology.</p>
+    </footer>
+
+    <script>
+        // JavaScript for responsive navigation (hamburger menu)
+        document.getElementById('hamburger').addEventListener('click', function() {
+            var mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobileMenu a').forEach(item => {
+            item.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
